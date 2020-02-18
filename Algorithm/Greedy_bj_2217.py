@@ -20,21 +20,20 @@ ropeList = sorted([int(input()) for i in range(N)],
 # 만약 가벼운 중량의 로프가 들어온다면, 그 로프 중량이 1/n 무게를 초과할 가능성이 높음
 # 따라서 무게가 무거운 순서로 정렬 후 조건식 작성
 
-
 k = 0
 w = 0
 chosen = []
 result = []
 for rope_weight in ropeList:
-    w = w + rope_weight
-    k = k + 1
-    p = w/k
-    if rope_weight < p:
-        total_weight = rope_weight*k
-        result.append(total_weight)
+    w = w + rope_weight   # 전체 무게
+    k = k + 1             # 로프 갯수
+    p = w/k               # 로프 하나가 견딜 평균 무게
+    if rope_weight < p:                 # 만약, 새로 선택하는 로프의 중량이 평균무게보다 가볍다면 
+        total_weight = rope_weight*k    # 전체 무게는 새로 선택하는 로프 중량 * 로프 갯수 
+        result.append(total_weight)     # (새로 선택되는 로프 중량보다 무겁게 들 수 없기 때문에) 전체 무게 저장
     else:
-        chosen.append(rope_weight)
-        total_weight = sum(chosen)
-        result.append(total_weight)
+        chosen.append(rope_weight)      # 만약, 새로 선택하는 로프의 중량이 평균무게보다 무겁거나 같다면
+        total_weight = sum(chosen)      # 전체 무게는 각 로프 중량을 다 더한 값
+        result.append(total_weight)     # 전체 무게 저장
 
-print(max(result))
+print(max(result))   # 저장된 전체 무게 중 max 출력
