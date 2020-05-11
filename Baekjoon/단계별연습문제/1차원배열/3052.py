@@ -1,14 +1,14 @@
-import sys
-
 result = []
 
-# for i in range(10):
-#     var = sys.stdin.readline()
-#     var = int(var)
-#     result.append(var % 42)
-result = [sys.stdin.readline() for i in range(10)]
+for i in range(10):
+    var1 =  int(input())
+    var2 = var1 % 42
+    if var2 in result:
+        pass
+    else:
+        result.append(var2)
+        
+print(len(result))
 
-
-print(result)      
 
         
