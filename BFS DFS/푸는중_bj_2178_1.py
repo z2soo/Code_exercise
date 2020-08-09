@@ -46,30 +46,38 @@ result = [[0 for _ in range(M)] for i in range(N)]
 print(visited)
 
 cnt = 0
-que = []
+#que = []
 
-directions = (0,1),(0,1),(-1,0),(0,-1)
+directions = (0,1),(1,0),(-1,0),(0,-1)
 
 
 def miro():
-    global N, M, myList
+    global N, M, myList, directions
+    que = []
     que.append((1,1))
     cnt = 0
     while que:
         x, y = que.pop(0)
         print(x,y) 
         for dx, dy in directions:
-            x = x + dx
-            y = y + dy
-            if x < 0 or y < 0:
+            xt = x + dx
+            yt = y + dy
+            if xt < 0 or yt < 0 or xt > N or yt > M:
                 #범위를 벗어난 경우 처리
-                print(x,y)
-            if visited[x][y] == 0:
-                visited[x][y] = 1  #방문처리
-                if myList[x][y] = 0:
-                #못지나가는 경우
-                else:
-
-                cnt += 1  
-                result[x][y] = cnt 
-
+                pass
+            else:
+                print(f'xt yt: {(xt, yt)}')
+                if visited[xt-1][yt-1] == 0:
+                    visited[xt-1][yt-1] = 1  #방문처리
+                    if myList[xt-1][yt-1] == 0:
+                    #못지나가는 경우
+                        result[xt-1][yt-1] = 0
+                    else:
+                        #지나갈 수 있는 경우
+                        cnt += 1
+                        result[xt-1][yt-1] = cnt
+                        que.append((xt,yt))
+    
+    print(result)
+    return(result[N-1][M-1])            
+print(miro())
