@@ -70,6 +70,6 @@ def miro():
                 #못지나가는 경우
                 else:
 
-                cnt += 1
+                cnt += 1  
                 result[x][y] = cnt 
 
