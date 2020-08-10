@@ -32,52 +32,36 @@ for _ in range(N):
     m = list(input())
     m = [int(_) for _ in m]
     myList.append(m)
-print(myList)
-
-# 필요한 내용
-# (1,1)부터 시작
-# 인근이 0인지 1인지 확인 및 저장? 카운트?
-# (N,M)이 되면 멈춤
-
 
 # 방문 유무 표시 
 visited = [[0 for _ in range(M)] for i in range(N)]
 result = [[0 for _ in range(M)] for i in range(N)]
-print(visited)
 
-cnt = 0
-#que = []
-
+# 방향키
 directions = (0,1),(1,0),(-1,0),(0,-1)
 
-
+# 함수 생성
 def miro():
     global N, M, myList, directions
     que = []
-    que.append((1,1))
-    cnt = 0
+    que.append((0,0))
+    result[0][0] = 1
     while que:
         x, y = que.pop(0)
-        print(x,y) 
         for dx, dy in directions:
             xt = x + dx
             yt = y + dy
-            if xt < 0 or yt < 0 or xt > N or yt > M:
+            if xt < 0 or yt < 0 or xt > N-1 or yt > M-1:
                 #범위를 벗어난 경우 처리
                 pass
             else:
-                print(f'xt yt: {(xt, yt)}')
-                if visited[xt-1][yt-1] == 0:
-                    visited[xt-1][yt-1] = 1  #방문처리
-                    if myList[xt-1][yt-1] == 0:
-                    #못지나가는 경우
-                        result[xt-1][yt-1] = 0
-                    else:
-                        #지나갈 수 있는 경우
-                        cnt += 1
-                        result[xt-1][yt-1] = cnt
-                        que.append((xt,yt))
-    
-    print(result)
+                if visited[xt][yt] == 0 and myList[xt][yt] == 1:
+                    visited[xt][yt] = 1                #방문처리
+                    result[xt][yt] = result[x][y] +1   #내가 헤맨 곳
+                    que.append((xt,yt))
     return(result[N-1][M-1])            
 print(miro())
+
+# 내가 헤맨 곳
+# 1. 시작 지점부터 1 이동으로 간주하는 것
+# 2. cnt 변수 따로 만들어서 이동수 체크함: 오류: 이전 방문수+1로 해결
