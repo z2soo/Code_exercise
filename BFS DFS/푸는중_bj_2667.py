@@ -13,61 +13,69 @@ myList = []
 
 # 방문 표시 및 결과
 visited = [[0 for _ in range(N)] for i in range(N)]
-result = [[0 for _ in range(N)] for i in range(N)]
 
 # 연결 정보 입력 받음
 for _ in range(N):
     m = list(input())
     m = [int(_) for _ in m]
     myList.append(m)
-print(myList) 
+
 
 # 방향키: 좌, 우, 하, 상
 directions = (0,1), (0,-1), (1,0), (-1,0)
+que =[]
 
-# 좌표 하나씩 주위에 접한 집이 있는지 확인
-# 접한 집이 있다면 같은 번호/문자로 result에 표시
-# 접한 집 인근 또한 확인하기 위해 해당 좌표 append
-# 방문 표시 
-# 접한 집이 없다면 새로운 번호/문자로 reset하고 반복
-# 번호로 묶음? 아니면 리스트로 생성?
 
-def home():
-    global myList, directions, visited
-    que = []
-    que.append((0,0))
-    cnt = 1
-    visited[0][0] = cnt
-    if myList[0][0] == 1:
-        result[0][0] = 1
+# 하나의 마을의 값을 받는 함수: 집이 몇 개 모여잇는지 출력
+def home(point):
+    global myList, directions, visited, N, que
+    cnt = 1                                         #집 갯수 카운트 용
+    que.append(point)
+    tempx, tempy = point
+    visited[tempx][tempy] = 1                                #현재 좌표 
     while que:
-        print(que)
-        x,y = que.pop(0)
-        for dx,dy in directions:
-            nextX = x + dx
-            nextY = y + dy
-            if 0 <= nextX < N and 0 <= nextY < N:       #index range 오류 확인
-                if visited[nextX][nextY] == 0:          #방문한 적이 없다면
-                    visited[nextX][nextY] = 1           #방문표시 해줌
-                    que.append((nextX,nextY))           #que에 추가    
-                    if myList[nextX][nextY] == 1:       #집이 있다면
+        x,y = que.pop(0)                            #현재 좌표 x,y
+        for dx,dy in directions:    
+            nextX = x + dx                          #인근 좌표 nextX, nextY
+            nextY = y + dy                          
+            if 0 <= nextX < N and 0 <= nextY < N and visited[nextX][nextY] == 0 and myList[nextX][nextY] == 1:
+                visited[nextX][nextY] = 1
+                que.append((nextX,nextY))
 
-################ 안되네?!?!??!?!?!?!?!?!?!?
-                                                        #이전 집들과 연결되어 있다면
-                                                        #동일한 값 cnt
-                        if myList[x][y] == 1:
-                            result[nextX][nextY] == cnt
-                                                        #이전 집들과 떨어져 있다면
-                                                        #cnt+1값
-                        elif myList[x][y] == 0:
-                            cnt = cnt+1
-                            result[nextX][nextY] == cnt
+                cnt += 1
+    return cnt 
+
+# 전체 정보에서 마을이 몇 개 있는지 확인하는 함수
+def village():
+    result = []
+    global myList, directions, N
+    for a in range(N):
+        for b in range(N):
+            if visited[a][b] == 0 and myList[a][b] == 1:
+               point = (a,b)
+               var = home(point)
+               if var != 0:
+                   result.append(var)
+                   #print(result)
+    return result
+
+# 결과 프린트
+final = village()
+final.sort()                #오름차순 정렬
+if len(final) == 0:         #마을이 없는 경우
+    print(int(0))
+else:
+    print(len(final))
+    for _ in final:
+        print(_)
 
 
-
-    print(f'result\n{result}')
-    print(f'visited\n{visited}')
-
-home()
-
-
+# 내가 막힌 부분
+# 1. 한 번에 모든 좌표를 다 훑고 마을 갯수를 구하려고 했음; 실패
+#    창혁오빠 코드 보고, 두 개의 함수로 나누어 생각 
+# 2. 처음 생성한 home()은 (0,0)부터 시작하는 것, 어떻에 어느 좌표에서 시작하는지 알지?
+#    방문 확인을 통해 한 번 방문한 곳은 다시 방문하지 않도록 함
+# 3. 왜 오류나지?
+#    반례) 3 \n101 \n010 \n101
+#    기존 좌표에서 다음 좌표가 파생됨; 기존 좌표의 값이 0(집 없음)인데 주변 좌표 값이 1(집 있음)인 것을 마을로 인식;
+#    이전 좌표의 값도 1이고, 다음 좌표의 값도 1인 경우에 마을로 인식하도록 고치기
