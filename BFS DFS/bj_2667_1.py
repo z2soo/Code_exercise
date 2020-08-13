@@ -31,8 +31,8 @@ def home(point):
     global myList, directions, visited, N, que
     cnt = 1                                         #집 갯수 카운트 용
     que.append(point)
-    tempx, tempy = point
-    visited[tempx][tempy] = 1                                #현재 좌표 
+    tempx, tempy = point                            #오류2
+    visited[tempx][tempy] = 1                                
     while que:
         x,y = que.pop(0)                            #현재 좌표 x,y
         for dx,dy in directions:    
@@ -41,9 +41,9 @@ def home(point):
             if 0 <= nextX < N and 0 <= nextY < N and visited[nextX][nextY] == 0 and myList[nextX][nextY] == 1:
                 visited[nextX][nextY] = 1
                 que.append((nextX,nextY))
-
                 cnt += 1
     return cnt 
+
 
 # 전체 정보에서 마을이 몇 개 있는지 확인하는 함수
 def village():
@@ -51,13 +51,13 @@ def village():
     global myList, directions, N
     for a in range(N):
         for b in range(N):
-            if visited[a][b] == 0 and myList[a][b] == 1:
+            if visited[a][b] == 0 and myList[a][b] == 1:        #오류1
                point = (a,b)
                var = home(point)
                if var != 0:
                    result.append(var)
-                   #print(result)
     return result
+
 
 # 결과 프린트
 final = village()
@@ -77,5 +77,5 @@ else:
 #    방문 확인을 통해 한 번 방문한 곳은 다시 방문하지 않도록 함
 # 3. 왜 오류나지?
 #    반례) 3 \n101 \n010 \n101
-#    기존 좌표에서 다음 좌표가 파생됨; 기존 좌표의 값이 0(집 없음)인데 주변 좌표 값이 1(집 있음)인 것을 마을로 인식;
-#    이전 좌표의 값도 1이고, 다음 좌표의 값도 1인 경우에 마을로 인식하도록 고치기
+#    오류1) myList[a][b] == 1 추가 작성; 방문한 적이 없으면서 방문하려는 좌표에 집이 있어야지 의미가 있기 때문
+#    오류2) 
