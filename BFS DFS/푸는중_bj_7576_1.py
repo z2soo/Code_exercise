@@ -5,11 +5,13 @@ import collections       #해당 문제는 디큐, 덱 사용; 기존 리스트�
 하루 후, 익은 토마토 인접한 안익은 토마토가 익음
 모든 토마토가 익을 때 까지 걸리는 최소 일 수
 토마토가 들어있지 않을 수 있음
-M: 상자 가로
-N: 상자 세로
+
+M: 상자 col
+N: 상자 row
 0: 안익음
 1: 익음
 -1: 없음
+
 모든 토마토가 익는 최소 일 수 출력
 저장시부터 모두 익은 상태: 0
 모두 익지 못하는 상태: -1
@@ -33,18 +35,50 @@ directions = (0,1),(0,-1),(1,0),(-1,0)
 def tomato():
     global directions, check, N, M, myBox
     deq = collections.deque()    
+    for i in range(N):
+        for j in range(M):
+            if myBox[i][j] == 1:
+                print(i,j)
+                deq.append((i,j))                   #우선 출발지점 넣어주기
+    print(f'deq:\n{deq}')
+    cnt = 0
     while deq:
-        x,y = deq.pop(0)
-        if check[x][y] == 0:      #방문하지 않았다면
-            check[x][y] = 1      #방문체크
+        x, y = deq.popleft()                #deq에서 좌표 가져오기
+        if check[x][y] == 0:            #방문하지 않았다면
+            check[x][y] = 1             #방문체크
             for dx, dy in directions:   #주변 칸 좌표 확인
+                print(x,y)
+                print(dx, dy)
                 newX = x + dx
                 newY = y + dy
-                if 0<= newX < M and 0<= newY < N    #해당 좌표가 범위를 벗어나지 않는다면
-                deq.append((newX,newY))             #다음에 작업하도록 deq에 추가 
+                print(newX,newY,'\n')
+                if 0<= newX < M and 0<= newY < N:    #새로운 좌표가 범위를 벗어나지 않는다면
+                    print('1차', (newX,newY))
+                    if myBox[x][y] == 1 and myBox[newX][newY] == 0:        #기존 토마토가 익고 주위 토마토가 안익엇다면
+                        myBox[newX][newY] = 1
+                        print('ddddd',newX,newY)
+                        deq.append((newX,newY))             #주위를 다음에 작업하도록 deq에 추가 
+                        cnt += 1
+
+                    elif myBox[x][y] == 1 and myBox[newX][newY] == 1:        #기존 토마토가 익고 주위 토마토도 익었다면
+                        deq.append((newX,newY))
+                    elif myBox[x][y] == 1 and myBox[newX][newY] == -1:      #기존 토아토가 익고 다음 토마토가 없으면
+                        pass 
+        # if 0 in check:
+        #     cnt = -1
+    return (cnt)
 
 
 
+
+
+# 확인했는데 익은 토마토면 = 1; 주위 접한 토마토 중 안익은 토마토=0 개수 확인
+# 확인했는데 -1이면 없는 곳 
+
+# 전체가 1이 되면 끝내기, 전체가 1이 되는데까지 날짜 출력
+# 전체가 다 못 익을 경우면 -1 출력
+
+print(tomato()) 
 
 # extend(): append랑 다르게 구분해서 추가 
 # collections.deque.extendleft(): 좌측
