@@ -35,42 +35,37 @@ directions = (0,1),(0,-1),(1,0),(-1,0)
 def tomato():
     global directions, check, N, M, myBox
     deq = collections.deque()    
+
     for i in range(N):
         for j in range(M):
             if myBox[i][j] == 1:
                 print(f'1인 좌표: {(i,j)}')
-                deq.append((i,j))                   #우선 출발지점 넣어주기
-    print(f'\n{deq}')
+                deq.append((i,j))                   #우선 출발지점 넣어주기        
     cnt = 0
+
     while deq:
+        print(f'\n{deq}')
+        print(myBox)
+        print(f'cnt: {cnt}')
         x, y = deq.popleft()                #deq에서 좌표 가져오기
-        if check[x][y] == 0:            #방문하지 않았다면
+        if check[x][y] == 0 :            #방문하지 않았다면
             check[x][y] = 1             #방문체크
+            
+            
             for dx, dy in directions:   #주변 칸 좌표 확인
-                print(x,y)
-                print(dx, dy)
                 newX = x + dx
                 newY = y + dy
-                print(newX,newY,'\n')
-                if 0 <= newX < M and 0 <= newY < N:    #새로운 좌표가 범위를 벗어나지 않는다면
-                    print('------')
-                    print('1차', (newX,newY))
-                    if myBox[x][y] == 1 and myBox[newX][newY] == 0:        #기존 토마토가 익고 주위 토마토가 안익엇다면
+                
+                if 0 <= newX < N and 0 <= newY < M and myBox[x][y] == 1: 
+                    if check[newX][newY] == 0:    
+                        print('추가:', (newX,newY))
+                        deq.append((newX, newY))      
                         myBox[newX][newY] = 1
-                        print('ddddd',newX,newY)
-                        deq.append((newX,newY))             #주위를 다음에 작업하도록 deq에 추가 
-                        cnt += 1
+                        cnt+=1    
+    return(cnt)
 
-                    elif myBox[x][y] == 1 and myBox[newX][newY] == 1:        #기존 토마토가 익고 주위 토마토도 익었다면
-                        deq.append((newX,newY))
-                    elif myBox[x][y] == 1 and myBox[newX][newY] == -1:      #기존 토아토가 익고 다음 토마토가 없으면
-                        pass 
-                else:
-                    print('???')
-        # if 0 in check:
-        #     cnt = -1
-    return (cnt)
-
+# 지금 문제는 하루 지날때 cnt+1 되는게 아니라 한 칸이 1로 바뀔 때마다 cnt+1이 되고 있는 상태
+# 함수 두개로 나눠야 하는거 같음...
 
 '''
 6 4
