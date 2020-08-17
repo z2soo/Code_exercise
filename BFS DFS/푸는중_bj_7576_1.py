@@ -38,9 +38,9 @@ def tomato():
     for i in range(N):
         for j in range(M):
             if myBox[i][j] == 1:
-                print(i,j)
+                print(f'1인 좌표: {(i,j)}')
                 deq.append((i,j))                   #우선 출발지점 넣어주기
-    print(f'deq:\n{deq}')
+    print(f'\n{deq}')
     cnt = 0
     while deq:
         x, y = deq.popleft()                #deq에서 좌표 가져오기
@@ -52,7 +52,8 @@ def tomato():
                 newX = x + dx
                 newY = y + dy
                 print(newX,newY,'\n')
-                if 0<= newX < M and 0<= newY < N:    #새로운 좌표가 범위를 벗어나지 않는다면
+                if 0 <= newX < M and 0 <= newY < N:    #새로운 좌표가 범위를 벗어나지 않는다면
+                    print('------')
                     print('1차', (newX,newY))
                     if myBox[x][y] == 1 and myBox[newX][newY] == 0:        #기존 토마토가 익고 주위 토마토가 안익엇다면
                         myBox[newX][newY] = 1
@@ -64,12 +65,20 @@ def tomato():
                         deq.append((newX,newY))
                     elif myBox[x][y] == 1 and myBox[newX][newY] == -1:      #기존 토아토가 익고 다음 토마토가 없으면
                         pass 
+                else:
+                    print('???')
         # if 0 in check:
         #     cnt = -1
     return (cnt)
 
 
-
+'''
+6 4
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 1
+'''
 
 
 # 확인했는데 익은 토마토면 = 1; 주위 접한 토마토 중 안익은 토마토=0 개수 확인
