@@ -46,9 +46,6 @@ def tomato():
     cnt = 0
 
     while deq:
-        print(f'\n{deq}')
-        print(myBox)
-        print(f'cnt: {cnt}')
         x, y = deq.popleft()                #deq에서 좌표 가져오기
         if check[x][y] == 0 :            #방문하지 않았다면
             check[x][y] = 1             #방문체크
@@ -69,14 +66,6 @@ def tomato():
 # 지금 문제는 하루 지날때 cnt+1 되는게 아니라 한 칸이 1로 바뀔 때마다 cnt+1이 되고 있는 상태
 # 함수 두개로 나눠야 하는거 같음...
 
-'''
-6 4
-0 0 0 0 0 0
-0 0 0 0 0 0
-0 0 0 0 0 0
-0 0 0 0 0 1
-'''
-
 
 # 확인했는데 익은 토마토면 = 1; 주위 접한 토마토 중 안익은 토마토=0 개수 확인
 # 확인했는데 -1이면 없는 곳 
@@ -86,7 +75,9 @@ def tomato():
 
 
 def oneDay():
-    
+    global directions, check, N, M, myBox
+
+
 
 
 
