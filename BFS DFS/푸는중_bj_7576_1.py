@@ -1,4 +1,4 @@
-  
+a  
 import collections       #해당 문제는 디큐, 덱 사용; 기존 리스트는 멀티스레드
 
 '''
@@ -84,7 +84,15 @@ def tomato():
 # 전체가 1이 되면 끝내기, 전체가 1이 되는데까지 날짜 출력
 # 전체가 다 못 익을 경우면 -1 출력
 
-print(tomato()) 
+
+def oneDay():
+    
+
+
+
+
+
+# print(tomato()) 
 
 # extend(): append랑 다르게 구분해서 추가 
 # collections.deque.extendleft(): 좌측
