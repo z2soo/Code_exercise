@@ -18,50 +18,71 @@ N: 상자 row
 저장시부터 모두 익은 상태: 0
 모두 익지 못하는 상태: -1
 '''
-# 필요한 정보 입력받음
-M,N = map(int, input().split())
-check = [[0 for _ in range(M)] for _ in range(N)]
-myBox = []
+# # 필요한 정보 입력받음
+# M,N = map(int, input().split())
+# check = [[0 for _ in range(M)] for _ in range(N)]
+# myBox = []
 
-# 토마토 상자 정보 입력받음
-for _ in range(N):
-    line = input().split(' ')
-    line = [int(_) for _ in line]
-    myBox.append(line)
-print(myBox)
+# # 토마토 상자 정보 입력받음
+# for _ in range(N):
+#     line = input().split(' ')
+#     line = [int(_) for _ in line]
+#     myBox.append(line)
+# print(myBox)
 
-# 방향키 설정
-directions = (0,1),(0,-1),(1,0),(-1,0)
+# # 방향키 설정
+# directions = (0,1),(0,-1),(1,0),(-1,0)
 
-# 함수 생성
-def tomato():
-    global directions, check, N, M, myBox
-    deq = collections.deque()    
+# # 함수 생성
+# def tomato():
+#     global directions, check, N, M, myBox
+#     deq = collections.deque()    
 
-    for i in range(N):
-        for j in range(M):
-            if myBox[i][j] == 1:
-                print(f'1인 좌표: {(i,j)}')
-                deq.append((i,j))                   #우선 출발지점 넣어주기        
-    cnt = 0
+#     for i in range(N):
+#         for j in range(M):
+#             if myBox[i][j] == 1:
+#                 print(f'1인 좌표: {(i,j)}')
+#                 deq.append((i,j))                   #우선 출발지점 넣어주기        
+#     cnt = 0
 
-    while deq:
-        x, y = deq.popleft()                #deq에서 좌표 가져오기
-        if check[x][y] == 0 :            #방문하지 않았다면
-            check[x][y] = 1             #방문체크
+#     while deq:
+#         x, y = deq.popleft()                #deq에서 좌표 가져오기
+#         if check[x][y] == 0 :            #방문하지 않았다면
+#             check[x][y] = 1             #방문체크
             
             
-            for dx, dy in directions:   #주변 칸 좌표 확인
-                newX = x + dx
-                newY = y + dy
+#             for dx, dy in directions:   #주변 칸 좌표 확인
+#                 newX = x + dx
+#                 newY = y + dy
                 
-                if 0 <= newX < N and 0 <= newY < M and myBox[x][y] == 1: 
-                    if check[newX][newY] == 0:    
-                        print('추가:', (newX,newY))
-                        deq.append((newX, newY))      
-                        myBox[newX][newY] = 1
-                        cnt+=1    
-    return(cnt)
+#                 if 0 <= newX < N and 0 <= newY < M and myBox[x][y] == 1: 
+#                     if check[newX][newY] == 0:    
+#                         print('추가:', (newX,newY))
+#                         deq.append((newX, newY))      
+#                         myBox[newX][newY] = 1
+#                         cnt+=1    
+#     return(cnt)
+
+
+
+# 하루 동안 주위 토마토 익는 것: x,y 하나 동안 
+def oneDay():
+    global directions, check, N, M, myBox
+    # deq = collections.deque()  
+
+    # while deq:
+    x, y =  deq.popleft()
+    if check[x][y] == 0 :            #방문하지 않았다면
+        check[x][y] = 1             #방문체크
+        for dx, dy in directions:   #주변 칸 좌표 확인
+            newX = x + dx
+            newY = y + dy    
+            if 0 <= newX < N and 0 <= newY < M and myBox[x][y] == 1: 
+                if check[newX][newY] == 0:    
+                    print('추가:', (newX,newY))
+                    deq.append((newX, newY))      
+                    myBox[newX][newY] = 1
+# 하루 몇번이 반복되는지..?
 
 # 지금 문제는 하루 지날때 cnt+1 되는게 아니라 한 칸이 1로 바뀔 때마다 cnt+1이 되고 있는 상태
 # 함수 두개로 나눠야 하는거 같음...
@@ -74,8 +95,6 @@ def tomato():
 # 전체가 다 못 익을 경우면 -1 출력
 
 
-def oneDay():
-    global directions, check, N, M, myBox
 
 
 
