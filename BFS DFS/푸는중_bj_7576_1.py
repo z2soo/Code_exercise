@@ -65,6 +65,8 @@ N: 상자 row
 
 
 
+
+
 # 하루 동안 주위 토마토 익는 것: x,y 하나 동안 
 def oneDay():
     global directions, check, N, M, myBox
