@@ -9,6 +9,7 @@ jump: 2*x로 이동
 수빈이가 동생을 찾을 수 있는 가장 빠른 시간은 몇 초 후?
 '''  
 
+
  
 N, K = map(int, input().split())
 visited = [0 for _ in range(100,000)]
