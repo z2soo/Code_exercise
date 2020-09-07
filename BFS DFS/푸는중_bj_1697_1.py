@@ -33,6 +33,7 @@ def seek():
             if nextX == K:
                 break
                 
+                
             
 
 print(seek())
