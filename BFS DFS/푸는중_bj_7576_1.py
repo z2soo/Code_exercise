@@ -56,6 +56,7 @@ def tomato_2():
             check[x][y] = 1             #방문체크
 
 
+
 #     cnt = 0
 
 #     while deq:
