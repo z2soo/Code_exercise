@@ -17,6 +17,7 @@ N: 상자 row
 '''
 
 
+
 # 필요한 정보 입력받음
 M,N = map(int, input().split())
 check = [[0 for _ in range(M)] for _ in range(N)]
